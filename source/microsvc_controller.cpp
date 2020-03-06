@@ -23,12 +23,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
+#include <string>
+#include <iostream>
 
 #include <std_micro_service.hpp>
 #include "microsvc_controller.hpp"
 
 using namespace web;
 using namespace http;
+using namespace std;
 
 void MicroserviceController::initRestOpHandlers() {
     _listener.support(methods::GET, std::bind(&MicroserviceController::handleGet, this, std::placeholders::_1));
@@ -39,18 +42,24 @@ void MicroserviceController::initRestOpHandlers() {
 }
 
 void MicroserviceController::handleGet(http_request message) {
-    auto path = requestPath(message);
-    if (!path.empty()) {
-        if (path[0] == "service" && path[1] == "test") {
-            auto response = json::value::object();
-            response["version"] = json::value::string("0.1.1");
-            response["status"] = json::value::string("ready!");
-            message.reply(status_codes::OK, response);
-        }
-    }
-    else {
-        message.reply(status_codes::NotFound);
-    }
+    string newMessage = "GET request incoming";
+    cout << newMessage << endl;
+    auto response = json::value::object();
+    response["version"] = json::value::string("0.1.1");
+    response["status"] = json::value::string("ready!");
+    message.reply(status_codes::OK, response);
+    // auto path = requestPath(message);
+    // if (!path.empty()) {
+    //     if (path[0] == "service" && path[1] == "test") {
+    //         auto response = json::value::object();
+    //         response["version"] = json::value::string("0.1.1");
+    //         response["status"] = json::value::string("ready!");
+    //         message.reply(status_codes::OK, response);
+    //     }
+    // }
+    // else {
+    //     message.reply(status_codes::NotFound);
+    // }
 }
 
 void MicroserviceController::handlePatch(http_request message) {
