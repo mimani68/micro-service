@@ -6,9 +6,11 @@
          "type": "cppdbg",
          "request": "launch",
          "program": "${workspaceRoot}/build/micro-service",
+         "miDebuggerServerAddress": "localhost:9091",
          "args": [],
          "stopAtEntry": false,
          "cwd": "${workspaceRoot}",
+         "sourceFileMap": { "/app": "${workspaceFolder}" },
          "environment": [],
          "externalConsole": false,
          "linux": {

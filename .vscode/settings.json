@@ -12,6 +12,9 @@
         "tuple": "cpp",
         "type_traits": "cpp",
         "utility": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "*.ipp": "cpp",
+        "iostream": "cpp",
+        "string_view": "cpp"
     }
 }
