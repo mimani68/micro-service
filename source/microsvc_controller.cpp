@@ -43,7 +43,6 @@ void MicroserviceController::initRestOpHandlers() {
 
 void MicroserviceController::handleGet(http_request message) {
     string newMessage = "GET request incoming";
-    cout << newMessage << endl;
     auto response = json::value::object();
     response["version"] = json::value::string("0.1.1");
     response["status"] = json::value::string("ready!");
@@ -62,16 +61,31 @@ void MicroserviceController::handleGet(http_request message) {
     // }
 }
 
+void MicroserviceController::handlePost(http_request message) {
+    // cout << "[debug] " << message.headers() << endl;
+    cout << "[debug] " << message.body() << endl;
+    // cout << "[debug] " << message.body().then() << endl;
+    cout << "[debug] " << message.to_string() << endl;
+
+    auto paths = http::uri::split_path(http::uri::decode(message.relative_uri().path()));
+    cout << "[debug] " << paths.empty() << endl;
+    utility::string_t pathItem = paths[0];
+    cout << "[debug] >" << pathItem << endl;
+    cout << "[debug] " << message.relative_uri().path() << endl;
+    
+    auto response = json::value::object();
+    response["message"] = json::value::string("pong");
+    cout << "[debug] resp:" << response << endl;
+
+    message.reply(status_codes::OK, response);
+}
+
 void MicroserviceController::handlePatch(http_request message) {
     message.reply(status_codes::NotImplemented, responseNotImpl(methods::PATCH));
 }
 
 void MicroserviceController::handlePut(http_request message) {
     message.reply(status_codes::NotImplemented, responseNotImpl(methods::PUT));
-}
-
-void MicroserviceController::handlePost(http_request message) {
-    message.reply(status_codes::NotImplemented, responseNotImpl(methods::POST));
 }
 
 void MicroserviceController::handleDelete(http_request message) {    
